@@ -57,6 +57,8 @@ Paste:
 MONGO_URI=your_atlas_url
 PORT=3000
 
+eg: mongodb+srv://arkfilmers_db_user:VUocOSh3keTGx2Ch@cluster0.rktucok.mongodb.net/ecommerce?retryWrites=true&w=majority
+
 ⸻
 
 🔥 8. Run

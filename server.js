@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -10,15 +11,21 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// MongoDB Connection
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/ecommerce';
+// MongoDB Atlas Connection
+if (!process.env.MONGO_URI) {
+    console.error('ERROR: MONGO_URI is not defined. Please create a .env file with your MongoDB Atlas connection string.');
+    process.exit(1);
+}
 
-mongoose.connect(MONGO_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(async () => {
-    console.log('Connected to MongoDB.');
+    console.log('Successfully connected to MongoDB Atlas.');
     await seedDatabase();
   })
-  .catch(err => console.error('Error connecting to MongoDB:', err));
+  .catch(err => {
+    console.error('Failed to connect to MongoDB Atlas:', err.message);
+    process.exit(1);
+  });
 
 // Mongoose Models
 const productSchema = new mongoose.Schema({
